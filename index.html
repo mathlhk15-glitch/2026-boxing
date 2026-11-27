@@ -25,6 +25,11 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
+.goldbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 10px;background:var(--ink);color:var(--paper);text-decoration:none;padding:11px 16px;font-size:15px;text-align:center;min-height:48px}
+.goldbar b{color:var(--gold2)}
+.goldbar .gb{background:linear-gradient(180deg,#FFE9A8,#C9952B);color:var(--ink);font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:.12em;border-radius:4px;padding:2px 8px}
+.goldbar .arr{font-weight:800;color:var(--paper);text-decoration:underline;text-underline-offset:3px}
+.goldbar:hover .arr{color:var(--gold2)}
 /* ---------- HERO : fight poster ---------- */
 .hero{position:relative;padding:clamp(22px,5vw,48px) 0 0;overflow:hidden}
 .hero .wrap{position:relative;z-index:1}
@@ -79,8 +84,8 @@ section{padding:clamp(34px,6vw,64px) 0}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 
 /* ---------- STAGE (player) ---------- */
-.stage{display:grid;grid-template-columns:1.4fr .6fr;gap:18px;align-items:start}
-.screen{position:relative;aspect-ratio:16/9;background:#0d0b09;border-radius:16px;overflow:hidden;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red)}
+.stage{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:18px;align-items:start}
+.screen{position:relative;width:100%;aspect-ratio:16/9;min-height:200px;background:#0d0b09;border-radius:16px;overflow:hidden;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red)}
 .screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .poster2{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--paper);text-align:center;padding:20px;
   background:radial-gradient(circle at 50% 120%,rgba(200,16,46,.55),transparent 60%),repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 2px,transparent 2px 14px)}
@@ -89,6 +94,7 @@ section{padding:clamp(34px,6vw,64px) 0}
 .play{width:78px;height:78px;border-radius:50%;background:var(--red);display:grid;place-items:center;box-shadow:0 0 0 8px rgba(200,16,46,.25);transition:transform .2s}
 .play:hover{transform:scale(1.08)}
 .play svg{margin-left:5px}
+.ytlink{display:inline-flex;align-items:center;min-height:44px;margin-top:12px;font-weight:800;font-size:15px;color:var(--red);text-underline-offset:4px}
 .info{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:18px}
 .info .day{font-size:13px;font-weight:800;color:var(--red);letter-spacing:.08em}
 .info h3{font-family:var(--head);font-weight:700;font-size:clamp(26px,3.4vw,36px);line-height:1.1;margin:4px 0 10px}
@@ -146,10 +152,17 @@ footer b{color:var(--ink)}
 .frame button{display:block;width:100%;padding:0;border-radius:10px;overflow:hidden;border:6px solid var(--gold2);box-shadow:0 0 0 3px var(--ink),10px 12px 0 var(--red);background:#000;cursor:zoom-in}
 .frame img{display:block;width:100%;height:auto}
 .ribbon{position:absolute;left:-12px;top:-16px;background:var(--red);color:#fff;font-family:var(--head);font-weight:700;font-size:14px;letter-spacing:.1em;padding:6px 14px;border-radius:4px;transform:rotate(-6deg);box-shadow:3px 3px 0 var(--ink);z-index:2}
-.lb{position:fixed;inset:0;background:rgba(10,8,6,.92);display:none;align-items:center;justify-content:center;padding:16px;z-index:40}
-.lb.on{display:flex}
-.lb img{max-width:100%;max-height:88vh;border:4px solid var(--gold2);border-radius:8px}
-.lb button{position:absolute;top:14px;right:14px;width:48px;height:48px;border-radius:50%;background:var(--paper);color:var(--ink);font-size:24px;font-weight:800}
+dialog{border:0;padding:0;background:transparent;color:inherit}
+dialog::backdrop{background:rgba(10,8,6,.9)}
+.lb{max-width:96vw;max-height:94vh;overflow:visible}
+.lb[open]{display:flex;align-items:center;justify-content:center}
+.lb.fallback{position:fixed;inset:0;margin:auto;z-index:40}
+.lb img{max-width:94vw;max-height:88vh;border:4px solid var(--gold2);border-radius:8px}
+.cdlg{background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:14px;padding:20px;width:min(92vw,520px)}
+.cdlg h3{font-family:var(--head);font-size:20px;margin-bottom:6px}.cdlg p{font-size:14px;color:var(--ink2)}
+.cdlg input{width:100%;margin-top:12px;padding:12px;border:2px solid var(--ink);border-radius:8px;font-size:15px;background:#fff}
+.cacts{display:flex;justify-content:flex-end;margin-top:12px}
+.lb .x{position:absolute;top:14px;right:14px;width:48px;height:48px;border-radius:50%;background:var(--paper);color:var(--ink);font-size:24px;font-weight:800}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:30}
 @media (max-width:860px){.champ .wrap{grid-template-columns:1fr}.frame{transform:none}}
 
@@ -160,7 +173,8 @@ footer b{color:var(--ink)}
   .glove{position:absolute;right:-24px;top:-6px;width:42%;max-width:190px;opacity:.95;z-index:0}
   .poster>div{position:relative;z-index:1}
   .ropes{display:none}
-  .stage{grid-template-columns:1fr}
+  .stage{grid-template-columns:minmax(0,1fr)}
+  .stage>*{min-width:0}
   .screen{box-shadow:5px 5px 0 var(--red)}
 }
 @media (max-width:620px){
@@ -186,6 +200,7 @@ footer b{color:var(--ink)}
 </style>
 </head>
 <body>
+<a class="goldbar" href="#champ"><span class="gb">GOLD</span><span><b>이선우 선수</b>, 2026 전국종별신인복싱선수권 <b>우승!</b></span><span class="arr">축하 보러 가기 →</span></a>
 <header class="hero">
   <div class="ropes" aria-hidden="true"></div>
   <div class="wrap">
@@ -210,7 +225,7 @@ footer b{color:var(--ink)}
     <div class="tally" aria-label="한눈에 보기">
       <div><b>5</b><span>경기</span></div><div><b>4</b><span>선수</span></div><div><b>4</b><span>대회 일차</span></div><div><b>2</b><span>링 (A·B)</span></div>
     </div>
-    <div class="cta"><a class="btn red" href="#champ">우승 소식 보기</a><a class="btn" href="#stage">▶ 첫 경기부터 보기</a><a class="btn" href="#list">전체 바로가기 목록</a></div>
+    <div class="cta"><a class="btn red" href="#champ">우승 소식 보기</a><a class="btn" href="#stage" data-first="1">▶ 첫 경기부터 보기</a><a class="btn" href="#list">전체 바로가기 목록</a></div>
   </div>
 </header>
 
@@ -231,7 +246,8 @@ footer b{color:var(--ink)}
     </div>
   </div>
 </section>
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="포스터 크게 보기"><img alt="" id="lbImg"><button type="button" id="lbClose" aria-label="닫기">×</button></div>
+<dialog class="lb" id="lb" aria-label="포스터 크게 보기"><img alt="이선우 선수 우승 축하 포스터 크게 보기" id="lbImg"><button type="button" class="x" data-close aria-label="닫기">×</button></dialog>
+<dialog class="cdlg" id="copyDlg" aria-labelledby="copyT"><h3 id="copyT">링크를 직접 복사해 주세요</h3><p>자동 복사가 막힌 환경입니다. 아래 주소를 길게 누르거나 Ctrl+C로 복사하세요.</p><input id="copyUrl" type="text" readonly aria-label="경기 링크"><div class="cacts"><button type="button" class="btn" data-close>닫기</button></div></dialog>
 <canvas id="fx" aria-hidden="true"></canvas>
 
 <main>
@@ -246,7 +262,7 @@ footer b{color:var(--ink)}
 <section class="wrap" id="stage" aria-labelledby="h-stage">
   <div class="sh"><span class="no">ROUND 2</span><h2 id="h-stage">링사이드 화면</h2><p>재생 버튼을 누르면 경기 장면부터 바로 시작합니다.</p></div>
   <div class="stage">
-    <div class="screen" id="screen"></div>
+    <div><div class="screen" id="screen"></div><a class="ytlink" id="ytLink" href="#" target="_blank" rel="noopener">유튜브에서 해당 장면 보기 ↗</a></div>
     <aside class="info" id="info" aria-live="polite"></aside>
   </div>
 </section>
@@ -265,6 +281,12 @@ footer b{color:var(--ink)}
 <div class="toast" id="toast" role="status"></div>
 
 <script>
+var _opener=null;
+function openDlg(d,opener){_opener=opener||null;if(d.showModal){if(!d.open)d.showModal();}else{d.setAttribute('open','');d.classList.add('fallback');}var c=d.querySelector('[data-close]');if(c)c.focus();}
+function closeDlg(d){if(d.close&&d.open)d.close();else{d.removeAttribute('open');d.classList.remove('fallback');}}
+document.addEventListener('click',function(e){var c=e.target.closest('[data-close]');if(c){closeDlg(c.closest('dialog'));return;}if(e.target.tagName==='DIALOG')closeDlg(e.target);});
+document.addEventListener('close',function(e){if(e.target.tagName==='DIALOG'&&_opener&&_opener.focus){_opener.focus();_opener=null;}},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('dialog.fallback').forEach(function(d){closeDlg(d);if(_opener)_opener.focus();});}});
 (function(){
 'use strict';
 /* 경기 자료: 영상 ID와 시작 시점(시·분·초)만 고치면 됩니다 */
@@ -300,6 +322,7 @@ function select(i,scroll){cur=i;var b=BOUTS[i];
   $('screen').innerHTML='<div class="poster2"><div class="meta">'+b.day+'일차 · '+b.ring+'링</div><div class="vs">'+esc(b.name)+'</div>'+
     '<button type="button" class="play" id="playBtn" aria-label="'+esc(b.name)+' 경기 재생"><svg width="30" height="34" viewBox="0 0 30 34"><path d="M0 0l30 17L0 34z" fill="#fff"/></svg></button>'+
     '<div class="meta">'+(canEmbed?'누르면 '+b.clock+' 장면부터 재생':'파일로 열면 유튜브에서 재생됩니다')+'</div></div>';
+  var yl=$('ytLink');yl.href=b.url;yl.textContent='유튜브에서 '+b.name+' 경기 장면 보기 ↗';
   $('info').innerHTML='<div class="day">'+b.day+'일차 · '+b.ring+'링 · '+(i+1)+' / '+BOUTS.length+'</div><h3>'+esc(b.name)+'</h3>'+
     '<div class="clock">'+b.clock+'<small>부터</small></div><p>그날 생중계 영상의 처음부터 '+b.h+'시간 '+b.m+'분 '+b.s+'초 지난 장면입니다.</p>'+
     '<div class="acts"><a class="btn red" href="'+b.url+'" target="_blank" rel="noopener">유튜브에서 보기 ↗</a><button type="button" class="btn" data-copy="'+i+'">이 경기 링크 복사</button></div>'+
@@ -309,14 +332,17 @@ function select(i,scroll){cur=i;var b=BOUTS[i];
 function play(){var b=BOUTS[cur];
   if(!canEmbed){window.open(b.url,'_blank','noopener');return;}
   $('screen').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.id+'?start='+b.sec+'&autoplay=1&rel=0&playsinline=1" title="'+esc(b.name)+' 경기 영상" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';}
-function copy(i){var u=BOUTS[i].url;
-  function fb(){var ta=document.createElement('textarea');ta.value=u;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('링크를 복사했습니다');}catch(e){prompt('아래 링크를 복사하세요',u);}ta.remove();}
+function copy(i,btn){var u=BOUTS[i].url,opener=btn||document.activeElement;
+  function manual(){var d=$('copyDlg'),inp=$('copyUrl');inp.value=u;openDlg(d,opener);setTimeout(function(){inp.focus();inp.select();},30);}
+  function fb(){var ta=document.createElement('textarea'),ok=false;ta.value=u;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    try{ok=document.execCommand('copy');}catch(e){ok=false;}ta.remove();if(ok)toast('링크를 복사했습니다');else manual();}
   if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(u).then(function(){toast('링크를 복사했습니다');},fb);else fb();}
 
 document.addEventListener('click',function(e){
+  var f=e.target.closest('[data-first]');if(f){e.preventDefault();select(0,true);return;}
   var t=e.target.closest('[data-i]');if(t){select(+t.getAttribute('data-i'),true);return;}
   if(e.target.closest('#playBtn')){play();return;}
-  var c=e.target.closest('[data-copy]');if(c){copy(+c.getAttribute('data-copy'));return;}
+  var c=e.target.closest('[data-copy]');if(c){copy(+c.getAttribute('data-copy'),c);return;}
   var s=e.target.closest('[data-step]');if(s&&!s.disabled){var n=cur+(+s.getAttribute('data-step'));if(n>=0&&n<BOUTS.length)select(n,false);}
 });
 select(0,false);
@@ -324,11 +350,8 @@ select(0,false);
 
 /* champion: lightbox + confetti */
 (function(){var lb=document.getElementById('lb'),img=document.getElementById('lbImg'),src=document.getElementById('poster').src;
-  function open(){img.src=src;lb.classList.add('on');document.getElementById('lbClose').focus();}
-  function close(){lb.classList.remove('on');}
+  function open(e){img.src=src;openDlg(lb,e.currentTarget);}
   document.getElementById('posterBtn').addEventListener('click',open);document.getElementById('zoom').addEventListener('click',open);
-  lb.addEventListener('click',function(e){if(e.target===lb||e.target.id==='lbClose')close();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   var cv=document.getElementById('fx'),cx=cv.getContext&&cv.getContext('2d'),parts=[],raf=0,count=0;
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function burst(x,y){if(!cx||reduce)return;cv.width=innerWidth;cv.height=innerHeight;
